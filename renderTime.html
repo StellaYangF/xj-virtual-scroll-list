@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>渲染时长比较</title>
+  <style>
+    * { box-sizing: border-box; }
+    ul#container { list-style: none; width: 90%; padding: 20px; margin: 20px auto; border-radius: 4px; background-color: #f8f8f8;}
+    ul li { padding: 20px; background: #cff6cf; }
+    ul li:nth-child(odd) { background: #cfe5cf; }
+  </style>
+</head>
+<body>
+  <h2>全量渲染</h2>
+  <ul id='container'></ul>
+  <script>
+    
+    // 全量渲染
+    /*
+    let start1 = Date.now();
+    let fragment = document.createDocumentFragment();
+    for(let i = 0; i < 100000; i++) {
+      let li = document.createElement('li');
+      li.textContent = i;
+      fragment.appendChild(li);
+    }
+    container.appendChild(fragment);
+    console.log('同步执行时间：' + (Date.now() - start1) + 'ms')
+    start1 = Date.now();
+    setTimeout(
+      function(){ console.log('GUI 渲染时间：' +  (Date.now() - start1) + 'ms')}
+    );
+    */
+
+    let id = 0;
+    let fragment = document.createDocumentFragment();
+    while(id < 100000) {
+      id += 1000;
+      setTimeout(function() {
+        for (let i = 0; i<1000; i++) {
+          let li = document.createElement('li');
+          li.textContent = i;
+          fragment.appendChild(li);
+        }
+      }, 0);
+    }
+    container.appendChild(fragment);
+  </script>
+</body>
+</html>
